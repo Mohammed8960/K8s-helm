@@ -15,6 +15,13 @@ spec:
       containers:
         - name: worker
           image: mohammed8960/hungerstation-worker
+          resources:
+            requests:
+              cpu: 25m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 200Mi
           envFrom:
             - configMapRef:
                 name: global-data-config

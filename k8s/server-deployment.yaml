@@ -17,6 +17,25 @@ spec:
           image: mohammed8960/hungerstation-server
           ports:
             - containerPort: 5000
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 200Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
           env:
             - name: PGPASSWORD
               valueFrom:
