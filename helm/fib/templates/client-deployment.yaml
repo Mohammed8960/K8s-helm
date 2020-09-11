@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.metadata.client }}
+spec:
+  replicas: {{ .Values.replica.client }}
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: client
+          image: {{ .Values.deployment.user }}/hungerstation-client
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: {{ .Values.resources.client.requests.cpu }}
+              memory: {{ .Values.resources.client.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.client.limits.cpu }}
+              memory: {{ .Values.resources.client.limits.memory }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.readinessProbe.client.port }}
+            initialDelaySeconds: {{ .Values.readinessProbe.client.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.client.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.readinessProbe.client.port }}
+            initialDelaySeconds: {{ .Values.readinessProbe.client.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.client.timeoutSeconds }}

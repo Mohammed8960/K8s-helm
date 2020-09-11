@@ -1,0 +1,76 @@
+metadata:
+  server: "server-deployment"
+  client: "client-deployment"
+  worker: "worker-deployment"
+  redis: "redis-deployment"
+  postgres: "postgres-deployment"
+
+replica:
+  server: 3
+  worker: 1
+  client: 3
+
+hpa:
+  server:
+    minReplicas: 3
+    maxReplicas: 8
+    cpuPercentage: 70
+  worker:
+    minReplicas: 1
+    maxReplicas: 6
+    cpuPercentage: 70
+  client:
+    minReplicas: 3
+    maxReplicas: 8
+    cpuPercentage: 70
+
+redis:
+  host: redis-cluster-ip-service
+  port: 6379
+
+postgres:
+  host: postgres-cluster-ip-service
+  user: postgres
+  database: postgres
+  port: 5432
+
+deployment:
+  user: mohammed8960
+
+resources:
+  server:
+    requests:
+      cpu: 50m
+      memory: 100Mi
+    limits:
+      cpu: 100m
+      memory: 200Mi
+  client:
+    requests:
+      cpu: 25m
+      memory: 30Mi
+    limits:
+      cpu: 50m
+      memory: 100Mi
+  worker:
+    requests:
+      cpu: 25m
+      memory: 50Mi
+    limits:
+      cpu: 100m
+      memory: 200Mi
+
+readinessProbe:
+  server:
+    port: 5000
+    initialDelaySeconds: 10
+    timeoutSeconds: 10
+  client:
+    port: 3000
+    initialDelaySeconds: 10
+    timeoutSeconds: 10
+
+
+
+
+

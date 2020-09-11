@@ -1,0 +1,5 @@
+Thanks for your time in reviewing {{ .Chart.Name }}.
+to get the local IP of the cluster please run
+$ minikube ip
+
+

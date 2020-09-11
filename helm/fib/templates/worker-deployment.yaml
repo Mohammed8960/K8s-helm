@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.metadata.worker }}
+spec:
+  replicas: {{ .Values.replica.worker }}
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers:
+        - name: worker
+          image: {{ .Values.deployment.user }}/hungerstation-worker
+          resources:
+            requests:
+              cpu: {{ .Values.resources.worker.requests.cpu }}
+              memory: {{ .Values.resources.worker.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.worker.limits.cpu }}
+              memory: {{ .Values.resources.worker.limits.memory }}
+          envFrom:
+            - configMapRef:
+                name: global-data-config

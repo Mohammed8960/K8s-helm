@@ -1,0 +1,43 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: worker-deployment
+  namespace: default
+spec:
+  minReplicas: {{ .Values.hpa.worker.minReplicas }}
+  maxReplicas: {{ .Values.hpa.worker.maxReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: worker-deployment
+  targetCPUUtilizationPercentage: {{ .Values.hpa.worker.cpuPercentage }}
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: server-deployment
+  namespace: default
+spec:
+  minReplicas: {{ .Values.hpa.server.minReplicas }}
+  maxReplicas: {{ .Values.hpa.server.maxReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: server-deployment
+  targetCPUUtilizationPercentage: {{ .Values.hpa.server.cpuPercentage }}
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: client-deployment
+  namespace: default
+spec:
+  minReplicas: {{ .Values.hpa.client.minReplicas }}
+  maxReplicas: {{ .Values.hpa.client.maxReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: client-deployment
+  targetCPUUtilizationPercentage: {{ .Values.hpa.client.cpuPercentage }}
